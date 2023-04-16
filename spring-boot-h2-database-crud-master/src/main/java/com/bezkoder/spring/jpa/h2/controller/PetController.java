@@ -1,11 +1,8 @@
 package com.bezkoder.spring.jpa.h2.controller;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import com.bezkoder.spring.jpa.h2.model.Pet;
-import com.bezkoder.spring.jpa.h2.model.Tutorial;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,15 +29,12 @@ public class PetController {
 
     @GetMapping("/pets")
     public List<Pet> getAllPets() {
-
         return petRepository.findAll();
-
     }
 
     @GetMapping("/pets/{id}")
     public ResponseEntity<Pet> getPetById(@PathVariable("id") long id) {
         Optional<Pet> petData = petRepository.findById(id);
-
         if (petData.isPresent()) {
             return new ResponseEntity<>(petData.get(), HttpStatus.OK);
         } else {
@@ -54,7 +48,7 @@ public class PetController {
             Pet _pet = petRepository
                     .save(new Pet(pet.getAge(), pet.getPrice(), pet.getSpecies(), pet.getStatus()));
             return new ResponseEntity<>(_pet, HttpStatus.CREATED);
-        } catch (Exception e) {
+          }catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -63,7 +57,6 @@ public class PetController {
     @PutMapping("/pets/{id}")
     public ResponseEntity<Pet> updatePet(@PathVariable("id") long id, @RequestBody Pet pet) {
         Optional<Pet> petData = petRepository.findById(id);
-
         if (petData.isPresent()) {
             Pet _pet = petData.get();
             _pet.setAge(pet.getAge());
@@ -81,7 +74,7 @@ public class PetController {
         try {
             petRepository.deleteById(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
+         }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
