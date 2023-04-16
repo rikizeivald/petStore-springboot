@@ -85,16 +85,6 @@ public class PetController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @DeleteMapping("/pets")
-    public ResponseEntity<HttpStatus> deleteAllPets() {
-        try {
-            petRepository.deleteAll();
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 }
 
 
