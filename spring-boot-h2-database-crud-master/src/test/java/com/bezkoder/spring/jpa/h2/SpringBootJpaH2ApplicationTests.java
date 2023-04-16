@@ -24,37 +24,39 @@ import java.util.Objects;
 class SpringBootJpaH2ApplicationTests {
 	@Autowired
 	private PetRepository petRepository;
+	
 	@Test
 	@Order(1)
 	@Rollback(value = false)
 	void createPet() {
-		Pet pet =new Pet(10,10,"sdvsdv","dvv");
+		Pet pet =new Pet(10,10,"male","strong");
 		petRepository.save(pet);
 		Assertions.assertThat(pet.getId()).isGreaterThan(0);
 	}
+	
 	@Test
 	@Order(2)
 	public void getPetByIdTest(){
-		Pet pet =new Pet(10,10,"sdvsdv","dvv");
+		Pet pet =new Pet(10,10,"male","strong");
 		Pet pet2=petRepository.save(pet);
-		Pet pet3 = petRepository.findById(pet2.getId()).get();
 		Assertions.assertThat(pet.getId()).isEqualTo(pet2.getId());
 	}
 
 	@Test
 	@Order(3)
 	public void getListOfPetsTest(){
-		Pet pet =new Pet(10,10,"sdvsdv","dvv");
+		Pet pet =new Pet(10,10,"male","strong");
 		petRepository.save(pet);
 		Assertions.assertThat(pet.getId()).isGreaterThan(0);
 		List<Pet> pets = petRepository.findAll();
 		Assertions.assertThat(pets.size()).isGreaterThan(0);
 	}
+	
 	@Test
 	@Order(4)
 	@Rollback(value = false)
 	public void updatePetTest(){
-		Pet pet =new Pet(10,20,"sdvsdv","dvv");
+		Pet pet =new Pet(10,20,"male","strong");
 		pet.setPrice(30);
 		Pet petUpdated =  petRepository.save(pet);
 		Assertions.assertThat(petUpdated.getPrice()).isEqualTo(30);
@@ -64,22 +66,9 @@ class SpringBootJpaH2ApplicationTests {
 	@Order(5)
 	@Rollback(value = false)
 	public void deletePetTest(){
-		Pet pet =new Pet(10,20,"becv","dvv");
-	//	Pet pet2=petRepository.save(pet);
-	//	Pet pet3 = petRepository.findById(pet2.getId()).get();
+		Pet pet =new Pet(10,20,"male","health");
 		petRepository.save(pet);
 		petRepository.deleteById(pet.getId());
-
-		//employeeRepository.deleteById(1L);
-//
-//		Pet pet1 = null;
-//
-//		Optional<Pet> optionalPet = petRepository.findById(1L);
-//
-//		if(optionalPet.isPresent()){
-//			pet1 = optionalPet.get();
-//		}
-
 		Assertions.assertThat(pet.getId()).isNull();
 	}
 
